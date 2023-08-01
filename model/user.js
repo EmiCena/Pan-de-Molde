@@ -33,7 +33,7 @@ connection.connect((err) => {
 
 
 usuario_db.getAll = function (funCallback) {
-    var consulta = 'SELECT * FROM user';
+    var consulta = 'SELECT * FROM usuario';
     connection.query(consulta, function (err, rows) {
         if (err) {
             funCallback(err);
@@ -47,8 +47,8 @@ usuario_db.getAll = function (funCallback) {
 
 
 usuario_db.create = function (usuario, funcallback) {
-    consulta = "INSERT INTO user (email, nickname, clave) VALUES (?,?,?);";
-    params = [usuario.email, usuario.nickname, usuario.clave];
+    consulta = "INSERT INTO usuario (mail, nickname, pass) VALUES (?,?,?);";
+    params = [usuario.mail, usuario.nickname, usuario.pass];
 
     connection.query(consulta, params, (err, detail_bd) => {
         if (err) {
@@ -74,6 +74,55 @@ usuario_db.create = function (usuario, funcallback) {
     });
 }
 
+usuario_db.update = function(usuario, funcallback) {
+    const consulta = "UPDATE usuario SET nickname = ?, pass = ? WHERE mail = ?";
+    const params = [usuario.nickname, usuario.pass, usuario.mail];
+
+    connection.query(consulta, params, (err, resultado) => {
+        if (err) {
+            funcallback(err);
+        } else {
+            funcallback(null, resultado); // Pasar "null" como primer parámetro indica que no hay error.
+        }
+    });
+};
+
+
+usuario_db.borrar = function (id_p_e, retorno) { //DELETE
+    consulta = "DELETE FROM usuario WHERE mail = ?";
+    parametro = id_p_e;
+
+    connection.query(consulta, parametro, (err, result) => {
+        if(err) {
+            retorno({message: err.code, detail: err}, undefined);
+        }else{
+            retorno(undefined, {message: `La persona ${id_p_e} fue eliminada correctamente`,
+            detail: result});
+        }
+    })
+};
+
+usuario_db.getByEmail = function(mail, funcallback) {
+    const consulta = "SELECT mail FROM usuario";
+    const params = mail;
+
+    connection.query(consulta, params, (err, resultado) => {
+        if (err) {
+            funcallback(err);
+        } else {
+            funcallback(null, resultado); // Pasar el resultado de la consulta como información de las personas con el apellido especificado.
+        }
+    });
+};
+
+
+ 
+        
+    
+        
+
+    
+            
 
 
 module.exports = usuario_db;

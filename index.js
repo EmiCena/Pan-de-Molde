@@ -11,11 +11,11 @@ const configuracion = require("config.json");
 
 
 const controladorPersona = require("controller/personaController.js");
- const controladorUsuario = require("controller/usuarioController.js");
+const controladorUsuario = require("controller/usuarioController.js");
 // const controladorArticulo = require("controller/articuloController.js");
 
 app.use('/api/persona', controladorPersona);
- app.use('/api/usuario', controladorUsuario);
+app.use('/api/usuario', controladorUsuario);
 // app.use('/articulos', controladorArticulo);
 
 //aplicacion --> cuando se ejecuta el use hace dos cosas

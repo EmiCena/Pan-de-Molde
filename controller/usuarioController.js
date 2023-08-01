@@ -45,19 +45,42 @@ app.post('/', (req, res) => {
 
 });
 
+app.put("/",(req,res) => {
+    let usuario = req.body;
+    usuarioDb.update(usuario,(err,resultado) => {
+        if (err) {
+            res.status(500).send(err);
+        } else {
+            res.send(resultado)
+        }
+    })
+})
+
+app.delete('/:mail', (req, res) => { //DELETE (Borrar)
+    let usuario = req.params.mail;
+    usuarioDb.borrar(usuario, (err, result) =>{
+        if(err){
+            res.status(500).send(err);
+        }else{
+            res.json(result);
+        }
+    })
+});
+
+app.get('/mail', (req, res) => {
+    usuarioDb.getByEmail((err,resultado) => {
+        if (err) {
+            res.status(500).send(err)
+        } else {
+            res.json(resultado)
+        }
+    })
+});
+
+
+
 module.exports = app;
 
 
-lucas, pod, mail
-lucre, mencia, mail
-brenda, staudt, mail
-marco, mail
-
-var uno = {
-
-    "nombre": "",
-    "apellido": null,
-    "mail": ""
-};
 
 

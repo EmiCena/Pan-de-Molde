@@ -7,7 +7,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(morgan('tiny'));
 morgan(':method :url :status :res[content-length] - :response-time ms');
 
-const configuracion = require("config.json");
+const configuracion = require("configuracion.json");
 
 
 const controladorPersona = require("controller/personaController.js");
